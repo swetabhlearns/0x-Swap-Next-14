@@ -17,8 +17,8 @@ interface SwapQuoteParams {
   buyAmount?: any;
   takerAddress?: string;
   slippagePercentage?: string;
-  // Add other parameters as needed
 }
+const API_KEY = process.env.NEXT_PUBLIC_0x_API_KEY;
 
 export async function fetchPrice(queryParams: PriceQueryParams): Promise<any> {
   const query = new URLSearchParams(queryParams as any).toString();
@@ -28,7 +28,7 @@ export async function fetchPrice(queryParams: PriceQueryParams): Promise<any> {
 
     const response = await axios.get(`${URL}?${query}`, {
       headers: {
-        "0x-api-key": "c95b3c9d-0b92-4c8c-a2ff-ef91b6dedf7e",
+        "0x-api-key": API_KEY,
       },
     });
 
@@ -45,7 +45,7 @@ export async function getSwapQuote(params: SwapQuoteParams): Promise<any> {
     let URL = "https://polygon.api.0x.org/swap/v1/quote";
     const response = await axios.get(`${URL}?${query}`, {
       headers: {
-        "0x-api-key": "c95b3c9d-0b92-4c8c-a2ff-ef91b6dedf7e",
+        "0x-api-key": API_KEY,
       },
     });
     return response.data;
