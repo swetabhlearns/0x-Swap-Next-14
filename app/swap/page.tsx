@@ -41,7 +41,7 @@ const Swap = () => {
   const MAX_ALLOWANCE = BigInt(
     `115792089237316195423570985008687907853269984665640564039457584007913129639935`
   );
-  const debouncedSellAmount = useDebounce(sellAmount, 300);
+  const debouncedSellAmount = useDebounce(sellAmount, 600);
 
   const fetch_balance = async (token_address: any) => {
     if (isConnected) {
@@ -65,7 +65,7 @@ const Swap = () => {
   }, [debouncedSellAmount, sellToken]);
 
   useEffect(() => {
-    if (sellAmount) {
+    if (debouncedSellAmount) {
       calculatePrice();
     }
   }, [debouncedSellAmount, sellToken, buyToken]);
@@ -297,7 +297,7 @@ const Swap = () => {
       {isConnected ? (
         <button
           className={`${
-            isEnoughBal && Number(sellAmount) > 0
+            isEnoughBal && Number(debouncedSellAmount) > 0
               ? "bg-blue-500 hover:bg-blue-700"
               : "bg-gray-200"
           } text-black font-bold py-2 px-4 rounded w-full`}
@@ -306,11 +306,11 @@ const Swap = () => {
           }}
           disabled={
             isEnoughBal === false ||
-            Number(sellAmount) === 0 ||
-            sellAmount === ""
+            Number(debouncedSellAmount) === 0 ||
+            debouncedSellAmount === ""
           }
         >
-          {Number(sellAmount) === 0 || isEnoughBal
+          {Number(debouncedSellAmount) === 0 || isEnoughBal
             ? `Place Order`
             : `Insufficient Balance`}
         </button>
